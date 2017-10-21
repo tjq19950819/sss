@@ -1,0 +1,111 @@
+/*
+ * 图片组滚动效果组件
+ * 2015-07-6 10:26
+ * params:cfg
+ * */
+define(function(require,exports,module){
+	/*通过 require 引入依赖*/
+	require('jquery');
+
+	function ScrollAnimate(){
+		this.cfg = {
+			id: '', 
+			thisShow: 0,
+			speed: 300,      //滚动速度
+			scrollNum: 3,    //每次滚动的数量
+			box:'ul',        //容器
+			boxlist:'li',	 //容器里的子元素
+			theMag:10,		 //子元素的边距
+			Alllist:3,       //显示的数量
+			overlist:2,      //到达多少数字会隐藏按钮
+			theway:true,     //true执行事件一，事件一是显示隐藏按钮，事件二是改变按钮颜色
+			overnum:5,		 //超过多少数字显示按钮
+			thebutton:false  //true时执行事件，判断为多少时出现按钮
+		};
+	}	
+	
+	ScrollAnimate.prototype = {
+		init: function(cfg){
+			var $this = this; 
+			$this.cfg = $.extend($this.cfg,cfg);
+			var arg = $this.cfg;
+			var prev = $($this.cfg.prev);
+			var next = $($this.cfg.next);
+			arg.obj = $(arg.id);
+			arg.scrollObj = arg.obj.find(arg.box);
+			var onewidth = arg.scrollObj.find(arg.boxlist).innerWidth() + arg.theMag;
+			var step = arg.scrollNum * onewidth;
+
+			arg.scrollList = arg.scrollObj.find(arg.boxlist);
+			var BmaxIndex = arg.scrollList.length - arg.Alllist;
+			var listSize = arg.scrollList.size();
+			arg.scrollObj.css('width',(step+arg.theMag) * listSize + 'px');
+			var pages = Math.ceil(listSize / arg.scrollNum);
+			
+		    if(prev){
+		    	prev.live('click',function(e){	 
+		    		if(arg.thisShow==0){
+		    			arg.thisShow==0;
+		    		}else{
+		    			arg.thisShow--;
+				    	if(arg.theway){
+				    		start();
+				    	}else{
+				    		startSec();
+				    	}	
+			    		e.stopPropagation();
+		    		}
+		    	});
+		    }
+		    if(next){
+		    	next.live('click',function(e){	 
+		    		if(arg.thisShow > BmaxIndex){
+		    			return false;
+		    		}else{
+		    			arg.thisShow++;
+				    	if(arg.theway){
+				    		start();
+				    	}else{
+				    		startSec();
+				    	}
+			    		e.stopPropagation();
+		    		}
+		    	});
+		    }
+			//判断是否显示按钮
+			if(arg.thebutton){
+				if(pages<arg.overnum){
+					next.hide();
+					prev.hide();
+				}
+			}
+		   function start(){
+		   		//console.log(pages);
+		   		if(arg.thisShow >= pages-1){
+		   			next.hide();
+		   			prev.show();
+		   		}else if(arg.thisShow <= 0){
+		   			next.show();
+		   			prev.hide();
+		   		}else{		   			
+		   			next.show();
+		   			prev.show();
+		   		}
+				arg.scrollObj.stop(false,false).animate({'marginLeft' : - (arg.thisShow * step) + 'px'},arg.speed);
+		   }
+		   //改变按钮颜色
+		   function startSec(){
+		   		if(arg.thisShow >= pages - arg.scrollNum){
+		   			next.addClass(arg.ntendClass).removeClass(arg.ntClass);
+		   		}else if(arg.thisShow <= 0){
+		   			prev.addClass(arg.pendClass).removeClass(arg.peClass);
+		   		}else{		   			
+		   			prev.addClass(arg.peClass);
+		   			next.addClass(arg.ntClass);
+		   		}
+				arg.scrollObj.stop(false,false).animate({'marginLeft' : - (arg.thisShow * step) + 'px'},arg.speed);
+		   }
+		}
+	}
+	module.exports = ScrollAnimate;
+});

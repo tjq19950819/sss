@@ -1,0 +1,479 @@
+
+
+@charset "UTF-8";
+
+/* 头部样式开始 */
+.dr-header{
+    height: 89px;
+    border-bottom: 1px solid #e8cbbd;
+    box-shadow:0 0 4px #aaa;
+}
+.dr-header .logo{
+    margin-top: 10px;
+    margin-left: 17px;
+}
+.dr-member{
+    margin-top: 36px;
+}
+.dr-member a{
+    color: #8d8d8d;
+    font-size: 12px;
+}
+.dr-member .login{
+    padding: 0 14px 0 18px;
+}
+.dr-member .join{
+    display: inline-block;
+    padding: 0 10px;
+    background-color: #d9b39b;
+    color: #fff;
+    height: 20px;
+    line-height: 20px;
+}
+.dr-member .join:hover{
+    background-color: #d49e85;
+}
+.dr-member .tel{
+    margin-left: 18px;
+    color: #8d8d8d;
+    font-size: 12px;
+}
+.dr-member .help{
+    padding-left: 30px;
+}
+/* 头部样式结束 */
+
+/* banner样式开始 */
+
+/* 登录框样式开始 */
+.passprtlogin{
+    width: 312px;
+    height: 382px;
+    position: absolute;
+    top:40px;
+    left:50%;
+    margin-left: 110px;
+    border:1px solid #e4e6e8;
+    border-radius: 3px;
+    background-color: #fff;
+    z-index: 1;
+}
+.passprtlogin .loginform{
+    width: 310px;
+    height: 394px;
+}
+.passprtlogin .loginform h3{
+    height: 38px;
+    line-height: 38px;
+    margin-top: 14px;
+    font-size: 18px;
+    text-align: center;
+    color: #c67c59;
+    font-family: "microsoft yahei";
+}
+.passprtlogin .loginform .form-phone{
+    width: 254px;
+    margin:0 auto;
+}
+.dr-minaction{
+    height: 156px;
+}
+.passprtlogin .iptext{
+    display: block;
+    width: 246px;
+    height: 36px;
+    border:1px solid #e6e6e6;
+    border-radius: 4px;
+    margin-top: 12px;
+    color: #666;
+    line-height: 38px;
+    padding-left: 38px;
+}
+.passprtlogin .ico-user{
+    background: url(../images/ico-uinput.png) 12px 12px no-repeat;
+}
+.passprtlogin .inputcode{
+    float: left;
+    width: 130px;
+    background: url(../images/ico-uinput.png) 11px -96px no-repeat;
+}
+.yzm{
+    height: 56px;
+}
+.codebtn{
+    float: left;
+    width: 105px;
+    height: 40px;
+    line-height: 40px;
+    margin:16px 0 0 11px;
+    text-align: center;
+    font-size: 12px;
+    color: #c57d5c;
+    background: url(../images/getCodeBtn.png) no-repeat;
+}
+.use{
+    margin-top: 24px;
+    font-size: 12px;
+    text-align: center;
+    color: #000;
+}
+.use a{
+    color: #c57d5c;
+    text-decoration: underline;
+}
+.dr-btns{
+    width: 254px;
+    height: 100px;
+    margin:0 auto;
+}
+.dr-btns a{
+    display: inline-block;
+    width: 248px;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 4px;
+    line-height: 40px;
+    text-align: center;
+    cursor:pointer;
+}
+.dr-btns .btdl{
+    border:1px solid #c57d5c;
+    color: #c57d5c;
+}
+.dr-btns .btcolor{
+    border:1px solid #c57d5c;
+    background-color: #c57d5c;
+    color: #fff;
+}
+.dr-otherlogin{
+    height: 45px;
+    width: 310px;
+    position: absolute;
+    bottom:0;
+    left:0;
+    width: 100%;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+.dr-otherlogin h4{
+    position: absolute;
+    top:-7px;
+    width: 100%;
+    color: #c57d5c;
+    font-size: 12px;
+    background: url(../images/otherLoginHr.png) center no-repeat;
+}
+.dr-otherlogin a{
+    display:inline-block;
+    width: 21px;
+    height: 16px;
+    margin:18px 8px 0;
+    background:url(../images/ico-otherLogin.png) no-repeat;
+}
+.dr-otherlogin a.qq{
+    background-position: 0 0;
+}
+.dr-otherlogin a.qq:hover{
+    background-position:0 -27px;
+}
+.dr-otherlogin a.wx{
+    background-position: -42px 0;
+}
+.dr-otherlogin a.wx:hover{
+    background-position: -42px -27px;
+}
+.dr-otherlogin a.weibo{
+    background-position: -87px 0;
+}
+.dr-otherlogin a.weibo:hover{
+    background-position: -87px -27px;
+}
+.dr-otherlogin a.alipay{
+    background-position: -130px 0;
+}
+.dr-otherlogin a.alipay:hover{
+    background-position: -130px -27px;
+}
+
+body{
+    overflow-x: hidden;
+}
+.dr-banner{
+    height: 565px;
+    position: relative;
+}
+.dr-banner .slider{
+    position: absolute;
+    left:0;
+    width: 100%;
+    height: 100%;
+}
+.dr-banner .slider li{
+    float: left;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left:0;
+    top:0;
+}
+.dr-banner .slider li a{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.dr-banner .slider li img{
+    position: absolute;
+    top:0;
+    left:50%;
+    margin-left: -960px;
+}
+.dr-banner .slider li .pic1{
+    animation:run1 6s infinite;
+}
+@keyframes run1{
+    0%{
+        opacity:1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.dr-banner .slider li .pic2{
+    animation:run2 6s infinite;
+}
+@keyframes run2{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+.spots{
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    height: 33px;
+    text-align: center;
+}
+.spots ul{
+    display: inline-block;
+    height: 32px;
+    position: relative;
+}
+.spots ul li{
+    width: 36px;
+    height: 32px;
+    float: left;
+    text-align: left;
+    background: url(../images/line.png) center no-repeat;
+}
+.spots ul li.spots2{
+    width: 5px;
+    background: url(../images/right_d.png) left center no-repeat;
+}
+.spots ul li.spots1 span{
+    position: absolute;
+    display:inline-block;
+    width: 30px;
+    height: 30px;
+    margin:1px 0 0 -12px;
+    background:url(../images/bd.png) no-repeat;
+    animation: run3 6s infinite;
+}
+@keyframes run3{
+    0%{
+        left:0;
+    }
+    48%{
+        left:0px;
+    }
+    52%{
+        left:35px;
+    }
+    100%{
+        left:35px;
+    }
+}
+
+/* banner样式结束 */
+/* dr-footer样式开始 */
+ .dr-footer{
+        height: 633px;
+    }
+    .dr-footer-top{
+        height: 34px;
+        background: url(../images/footer_rp.jpg) repeat-x;
+    }
+    .dr-footer-icon{
+        height: 150px;
+        padding: 30px 0;
+    }
+    .dr-footer-icon li{
+        float: left;
+        width: 80px;
+        text-align: center;
+        margin:0 31px;
+    }
+    .dr-footer-icon a{
+        display: inline-block;
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .dr-footer-icon span{
+        display: inline-block;
+        margin-top: 16px;
+        color: #666;
+        font-size: 14px;
+        text-align: center;
+    }
+    .footer-icon1{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: 0 0;
+    }
+    .footer-icon1:hover{
+        background-position: 0 -60px;
+    }
+    .footer-icon2{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -60px 0;
+    }
+    .footer-icon2:hover{
+        background-position: -60px -60px;
+    }
+    .footer-icon3{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -120px 0;
+    }
+    .footer-icon3:hover{
+        background-position: -120px -60px;
+    }
+    .footer-icon4{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -180px 0;
+    }
+    .footer-icon4:hover{
+        background-position: -180px -60px;
+    }
+    .footer-icon5{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -240px 0;
+    }
+    .footer-icon5:hover{
+        background-position: -240px -60px;
+    }
+    .footer-icon6{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -300px 0;
+    }
+    .footer-icon6:hover{
+        background-position: -300px -60px;
+    }
+    .footer-icon7{
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        background: url(../images/icon_footer.png) no-repeat;
+        background-position: -360px 0;
+    }
+    .footer-icon7:hover{
+        background-position: -360px -60px;
+    }
+
+    .dr-gray{
+        height: 94px;
+        padding: 26px 0;
+        background-color: #e9e9e9;
+    }
+    .dr-help{
+        height: 48px;
+    }
+    .dr-help-left .dr-help-top{
+        display: inline-block;
+        height: 39px;
+        line-height: 39px;
+        padding-left: 46px;
+        background: url(../images/coin_left.png) left center no-repeat;
+        color: #797979;
+        font-size: 20px;
+        margin-right: 48px;
+    }
+    .dr-help-right p{
+        font-size: 12px;
+        color: #797979;
+        margin-bottom: 6px;
+    }
+    .dr-black{
+        height: 354px;
+        padding:56px 0;
+        background-color: #797979;
+    }
+    .dr-black .dr-service{
+        font-family: "SimSun";
+        font-size: 14px;
+        color: #cdcdcd;
+        line-height: 22px;
+        height: 100px;
+    }
+    .dr-service li{
+        float: left;
+        padding: 6px 50px;
+        border-left: 2px solid #959292;
+    }
+    .dr-service li:first-child{
+        border:none;
+        margin-left: 20px;
+    }
+    .dr-service h4{
+        font-weight: bold;
+    }
+    .dr-service a{
+        display: block;
+        color: #cdcdcd;
+    }
+    .dr-statement{
+        text-align: center;
+        height: 40px;
+        margin-top: 68px;
+        font-size: 12px;
+        line-height: 20px;
+        color: #c9c7c7;
+    }
+    .dr-langua{
+        font-family: "SimSun";
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .dr-langua a{
+          color: #cdcdcd;
+    }
+    /* dr-footer样式结束 */

@@ -1,0 +1,146 @@
+/*
+ * 探索dr族模块
+ * 2017-01-09 13:00
+ * */
+define(function(require,exports,module){
+	/*通过 require 引入依赖*/
+	require('jquery');
+	$(function(){
+		$('.drfansArt_All .Thezang').click(function(){
+			$('.dr_blackwall,.drzangit').show();
+		});
+		$('.drzangit .Popup_close,.drzangit_cort a').click(function(){
+			$('.dr_blackwall,.drzangit').hide();
+		});
+
+
+
+		/********************          频道分页         ********************/
+		//首页
+		$('#page .Topage_first').live("click",function(){
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : 1}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+		//尾页
+		$('#page #last').live("click",function(){
+			var page = Number($('#last').data('info'));
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+		//上一页
+		$('#page #previous').live("click",function(){
+			var page = Number($('#page .activate').text())-1;
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+
+		//下一页
+		$('#page #next').live("click",function(){
+			var page = Number($('#page .activate').text());
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page+1}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+		//翻页
+		$('#page em').live("click",function(){
+			var page = Number($(this).text());
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+		//跳转页码
+		$('#page .page_href').live("click",function(){
+			var page = Number($('.page_number').val());
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+
+		//跳转页码（专题页）
+		$('.jump').on('click', function(){
+			var page = Number($('.page_number').val());//要跳转的页码
+			var tag_id = $('.active').data('info');//页面标签
+
+			/*$('.jump').attr('href',searchUrl + '?tag_id='+ tag_id +'&page='+page);*/
+
+			var url = searchUrl + '?tag_id='+ tag_id +'&page='+page;
+			window.location.href = url;
+		});
+
+		/*$('#page .page_href').live("click",function(){
+			var page = Number($('.page_number').val());
+			var tag_id = $('.active').data('info');
+			$.get(searchUrl, {tag_id : tag_id, page : page}, function(res){
+				$('.container').html(res);
+			});
+		});*/
+
+		//点击标签筛选文章
+		$('.drfans_bread a').on("click", function(){
+			var tag_id = $(this).data('info');
+			$(this).addClass('active').siblings().removeClass('active');
+			$.get(searchUrl, {tag_id : tag_id, page : 1}, function(res){
+				$('.container').html(res);
+			});
+		});
+
+		//文章详情页
+		if(typeof(info_id)!="undefined") {
+			//文章详情页
+			$('.drfansArt_Cort').before('<a href="javascript:;" class="Thezang" data-info="' +  info_id + '"><i>赞' + praise_num +'</i></a><span class="drfReadTotal">浏览量（' + visit_num + '）</span>');
+		}
+
+		//文章点赞功能
+		$(".Thezang").live('click',function(){
+			if ($(this).hasClass('zangit')) {
+				return false;
+			}
+			
+			var id = $(this).data('info');
+  			var aa = $(this);
+			$.get(setpraiseUrl, {id: id}, function(res) {
+				switch (res.result) {
+					case -2:
+						$('.dr_sametc,.dr_blackwall, .Verifica_nobuy').hide();
+							$('.dr_Registsign,.dr_blackwall').show();
+						break;
+					case -1:
+					/*var praise_num = '<a href="javascript:;" class="Thezang zangit"><i>'+ res.praise_num +'</i></a>';*/
+						aa.removeClass('praise').addClass('zangit');
+						aa.html('<i>'+ '贊' + res.praise_num +'</i>');
+						alert(res.message);
+						break;
+					case '':
+						aa.removeClass('praise').addClass('zangit');
+						aa.html('<i>'+ '贊' + res.praise_num +'</i>');
+						alert(res.message);
+						break;
+					default:
+				}
+			});
+
+
+			
+		});
+	
+	});
+
+});
+
+
+

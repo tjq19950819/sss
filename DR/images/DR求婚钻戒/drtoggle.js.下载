@@ -1,0 +1,38 @@
+/*
+ * 显示隐藏组件
+ * 2015-06-27 14:00
+ * params:cfg
+ * */
+define(function(require,exports,module){
+	/*通过 require 引入依赖*/
+	require('jquery');
+
+	
+	function LoveVerify(){
+		this.cfg = {
+			id: '',
+			action:'',
+			callback: null
+		};
+	}	
+	
+	LoveVerify.prototype = {
+		init: function(cfg){
+			var $this = this;
+			$this.cfg = $.extend($this.cfg,cfg);
+			$($this.cfg.id).off('mouseenter').on('mouseenter',function(){
+				$($this.cfg.action).show();
+				$("#shopNav .drstore-xz").attr("style","width:26px");
+				$("#shopNav li").removeClass('drstore-tabhover').eq(0).addClass('drstore-tabhover');
+				$("#shopNav li.drstore-tabhover .drstore-shopname span").css('opacity','1');
+			}).off('mouseleave').on('mouseleave',function(){		
+				$($this.cfg.action).hide();
+				$(".drstore-all .drstore-allline .drstore-xz").attr("style","width:139px");
+				$(".drstore-all .drstore-tab li").removeClass('drstore-tabhover').eq(0).addClass('drstore-tabhover');
+				$(".drstore-all .drstore-tabhover .drstore-shopname span").css('opacity','1');
+			});
+		}
+	}
+	
+	module.exports = LoveVerify;
+});

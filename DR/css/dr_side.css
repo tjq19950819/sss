@@ -1,0 +1,131 @@
+﻿/*
+* @Author: Marte
+* @Date:   2017-08-15 10:02:49
+* @Last Modified by:   Marte
+* @Last Modified time: 2017-08-15 10:04:49
+*/
+
+ /* 侧边栏样式开始 */
+  .dr-quickservice{
+        display: none;
+        position:fixed;
+        z-index: 999;
+        right: 30px;
+        bottom:0;
+        width: 50px;
+        text-align: center;
+        background-color: #dbc7ba;
+    }
+    .kf-line{
+        position: relative;
+        width: 58px;
+        background-color: #d9b39b;
+        top:-34px;
+        left:-4px;
+        font-size: 12px;
+        color: #fff;
+        line-height: 16px;
+        padding-bottom: 14px;
+        cursor:pointer;
+    }
+    .kf-line span{
+        font-size: 12px;
+        color: #fff;
+        line-height: 16px;
+    }
+    .dr-quick-cort{
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        margin:17px 0;
+        transition: all 0.5s;
+    }
+
+    .dr-quickservice a{
+        display:inline-block;
+        background-image: url(../images/icon_servie.png);
+        background-repeat: no-repeat;
+        margin:0 auto;
+        margin-top: 10px;
+    }
+    .dr-quick-word{
+        display:none;
+        position: absolute;
+        width: 80px;
+        height: 50px;
+        padding: 0 10px;
+        background-color: #fff;
+        color: #bc9e8a;
+        font-size: 12px;
+        top:0;
+        right: 0;
+    }
+    .dr-quickservice .dr-quick-cort:hover{
+        background-color: #fff;
+    }
+    .dr-quickservice .dr-quick-cort:hover .dr-quick-word{
+        display:block;
+        right: 50px;
+    }
+    .dr-quick2{
+        background-position: 0 -33px;
+        width: 30px;
+        height: 29px;
+    }
+    .dr-quick-cort:hover .dr-quick2{
+        background-position: -41px -33px;
+    }
+    .dr-quick3{
+        background-position: -3px -74px;
+        width: 24px;
+        height: 30px;
+    }
+    .dr-quick-cort:hover .dr-quick3{
+        background-position: -44px -74px;
+    }
+    .dr-quick4{
+        background-position: 0 -120px;
+        width: 30px;
+        height: 27px;
+    }
+    .dr-quick-cort:hover .dr-quick4{
+        background-position: -41px -120px;
+    }
+    .dr-quick5{
+        background-position: -2px -159px;
+        width: 26px;
+        height: 29px;
+    }
+    .dr-quick-cort:hover .dr-quick5{
+        background-position: -43px -159px;
+    }
+    .dr-quick6{
+        background-position: -6px -199px;
+        width: 18px;
+        height: 30px;
+    }
+    .dr-quick-cort:hover .dr-quick6{
+        background-position: -47px -199px;
+    }
+    .dr-quick7{
+        background-position: -3px -239px;
+        width: 24px;
+        height: 30px;
+    }
+    .dr-quick-cort:hover .dr-quick7{
+        background-position: -44px -239px;
+    }
+   /*  .dr-top{
+        width: 50px;
+        height: 50px;
+        margin-top: 0;
+        background: url(../images/totop.jpg) no-repeat!important;
+    } */
+    .to-top{
+        -webkit-transition:all .5s;
+        -moz-transition:all .5s;
+        -ms-transition:all .5s;
+        -o-transition:all .5s;
+        transition:all .5s;
+    }
+    /*  侧边栏样式结束 */

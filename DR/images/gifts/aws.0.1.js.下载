@@ -1,0 +1,179 @@
+//ga 统计代码v0.1版本
+//params 相关参数
+//	accout: 账号
+//		DarryRing-PC 简体，繁体，英文pc
+//		DarryRing-WAP 简体，繁体，英文wap
+//	event:事件
+//		pageview 页面访问
+//		yuyue 预约事件，并另外带上yuyue_data:{"shop_id":27,"nickname":"仙阁.小齐","reserve_date":"2017-07-27","reserve_slot":"9:00-12:00","position":"钻石试戴,钻石试戴","context":"","area_code":"086","phone":"15978698909","shopname":"深圳-世界之窗店"}
+//		regsucc 注册成功
+//		paysucc 支付成功，并且另外带order_data:{orderid: "240689", orderno: "W201707051036281800512", allpayprice: "84298", livepayprice: "84298", createtime: "2017/07/05 10:07:28"}
+//		witness 见证浪漫爱情
+//		onlinezx 在线咨询
+//		goodscollect 商品收藏
+//		goodsshare 商品分享
+//		followme 关注我们
+//		followdr 关注DR
+//		appdownloading app下载
+//		
+//	desc: 描述
+//		PV访问，点击事件，预约成功
+var _dr = {
+	queryattr: 'dr-aws',
+	orderkey: '_dr-aws-orderkey',
+	pvidkey: '_dr-aws-pvid',
+	uvidkey: '_dr-aws-uvid',
+	params: {},
+
+	init: function(params) {
+		if (params && typeof params == 'object') {
+			this.params = params;
+		}
+		this.params.version = '0.1';
+		params.pvid = this.pvid();
+		params.uvid = this.uvid();
+	    if (document) {
+	        this.params.domain = document.domain || ''; 
+	        this.params.url = document.URL || ''; 
+	        this.params.title = document.title || ''; 
+	        this.params.referrer = document.referrer || '';
+	        this.params.token = this.getCookie('token') || '';
+	    }
+
+	    if (window && window.screen) {
+	        this.params.sh = window.screen.height || 0;
+	        this.params.sw = window.screen.width || 0;
+	        this.params.cd = window.screen.colorDepth || 0;
+	    }
+
+	    if (navigator) {
+	        this.params.lang = navigator.language || ''; 
+	    }
+
+	    this.send();
+	},
+
+	send: function() {
+		var args = ''; 
+	    for(var i in this.params) {
+	        if(args != '') {
+	            args += '&';
+	        }
+			if (typeof this.params[i] == 'object') {
+	        	args += i + '=' + JSON.stringify(this.params[i]);
+	        } else {
+	        	args += i + '=' + encodeURIComponent(this.params[i]);
+	        }
+	    }
+
+		var img = new Image(1, 1); 
+    	img.src = '//data.darryring.com/aws.gif?' + args;
+	},
+	
+	action: function() {
+		var that = this;
+		var drgalist = document.querySelectorAll('[' + that.queryattr + ']');
+		for (var i=0; i<drgalist.length; i++) {
+			var data = JSON.parse(drgalist[i].getAttribute('dr-aws'));
+			if (data && data.aws_bind) {
+				(function(d){
+					drgalist[i].addEventListener(data.aws_bind, function(evt){
+						that.init(d);
+					});
+				})(data);
+			}
+		}
+	},
+
+	setOrder: function(mjson) {
+		if (typeof mjson == 'object') {
+			if (typeof(sessionStorage) != 'undefined') {
+				sessionStorage.setItem(this.orderkey, JSON.stringify(mjson));
+			}
+		}
+	},
+
+	getOrder: function() {
+		if (typeof(sessionStorage) != 'undefined') {
+			var ostr = sessionStorage.getItem(this.orderkey);
+			if (!ostr) {
+				return new Object();
+			}
+			var ojson = JSON.parse(ostr);
+			if (!ojson) {
+				return new Object();
+			}
+			return ojson;
+		}
+	},
+
+	time2DateFormat: function(ctime, sept) {
+		var ndate = new Date();
+		ndate.setTime(ctime);
+		if (!sept) {
+			sept = '/';
+		}
+		var y = ndate.getFullYear();
+		var m = this.preZero(ndate.getMonth() + 1);
+		var d = this.preZero(ndate.getDate());
+		var h = this.preZero(ndate.getHours());
+		var mm = this.preZero(ndate.getMinutes());
+		var s = this.preZero(ndate.getSeconds());
+		return y+sept+m+sept+d+' '+h+':'+mm+':'+s;
+	},
+
+	pvid: function() {
+		if (typeof(sessionStorage) != 'undefined') {
+			var pvid = sessionStorage.getItem(this.pvidkey);
+			if (pvid) {
+				return pvid;
+			}
+			pvid = this.guid();
+			sessionStorage.setItem(this.pvidkey, pvid);
+			return pvid;
+		}
+		return this.guid();
+	},
+
+	uvid: function() {
+		if (typeof(localStorage) != 'undefined') {
+			var uvid = localStorage.getItem(this.uvidkey);
+			if (uvid) {
+				return uvid;
+			}
+			uvid = this.guid();
+			localStorage.setItem(this.uvidkey, uvid);
+			return uvid;
+		}
+		return this.guid();
+	},
+
+	s4: function() {
+		return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	},
+
+	guid: function() {
+		return (this.s4()+this.s4()+"-"+this.s4()+"-"+this.s4()+"-"+this.s4()+"-"+this.s4()+this.s4()+this.s4());
+	},
+
+	preZero: function(val) {
+		if (val < 10) {
+			val = '0' + val;
+		}
+		return val;
+	},
+
+	getCookie: function(key) {
+		var cstr = document.cookie;
+		if (!key) {
+			return cstr;
+		}
+		var re = new RegExp(key+'='+'([^;=]*)', 'i');
+		if (cstr.match(re)) {
+			return cstr.match(re)[1];
+		}
+		else {
+			return '';
+		}
+	}
+};

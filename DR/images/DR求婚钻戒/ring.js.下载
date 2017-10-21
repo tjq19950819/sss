@@ -1,0 +1,255 @@
+/*
+ * 求婚钻戒入口模块
+ * 2015-06-27 14:00
+ * */
+define(function(require,exports,module){
+	/*通过 require 引入依赖*/
+	require('jquery');
+	var Imgscroll = require('js/modules/scrolling.js');
+	
+	$(function(){
+		//更多条件
+		$('#moreCond').off('click').on('click',function(){
+			$('#priceCond').show();
+			$(this).hide();
+		});	 
+		//收起更多条件
+		$('#closePriceCond').off('click').on('click',function(){
+			$('#priceCond').hide();
+			$('#moreCond').show();
+		});
+		//收藏弹窗
+		$('.dring_thing-button span').off('click').on('click',function(){
+			var _this = $(this);
+			var str = _this.html();
+			var id = _this.data('id');
+			var price = _this.attr('price');
+			var sku = _this.attr('sku');
+
+			if (str == '收藏') {
+				var GoodsParams = {
+					id: id,
+					MainStones: '',
+					HandSizes: '',
+					MetalMaterials: "",
+					carved: '',
+					price: price,
+					sku : sku
+				};
+				$.post(collectionUrl, {data: GoodsParams}, function(res) {
+					switch (res.result) {
+						case -2:
+							$('.dr_sametc,.dr_blackwall, .Verifica_nobuy').hide();
+								$('.dr_Registsign,.dr_blackwall').show();
+								window.loginInterval = setInterval(function() {
+									$.get('/ajax/login', function(res) {
+										if (res.result >= 0) {
+											clearInterval(window.loginInterval);
+											location.reload();
+										}
+									});
+								},1000);
+							break;
+						case 0:
+							// $('.dr_shopPopup,.dr_blackwall').show();
+							// $(".ringbuy_Button i.to_ysc").show();
+							// _this.hide();
+							_this.html('已收藏');
+							showPopup();
+							break;
+						case -8:
+							alert(res.message);
+							break;
+						default:
+					}
+				});
+			} else {
+				var GoodsParams = {
+					id: id,
+					sku: sku
+				};
+				$.post(cannelcollectUrl, {data: GoodsParams}, function(res) {
+					switch (res.result) {
+						case -2:
+							$('.dr_sametc,.dr_blackwall, .Verifica_nobuy').hide();
+								$('.dr_Registsign,.dr_blackwall').show();
+								window.loginInterval = setInterval(function() {
+									$.get('/ajax/login', function(res) {
+										if (res.result >= 0) {
+											clearInterval(window.loginInterval);
+											location.reload();
+										}
+									});
+								},1000);
+							break;
+						case 0:
+							// $(".ringbuy_Button i.to_nosc").show().html('已取消收藏');
+							// _this.hide();
+
+							_this.html('收藏');
+							break;
+						case -1:
+							alert(res.message);
+							break;
+						default:
+					}
+				});
+			}
+			
+			
+		});
+		//关闭弹窗
+		$('.Popup_close').off('click').on('click',function(){
+			$('.dr_shopPopup').stop(false,false).fadeOut();
+			$('.dr_blackwall').stop(false,false).fadeOut();
+		});
+
+		//点击继续购物
+		$('.goto_shop').off('click').on('click',function(){
+			/*alert('121');*/
+			$('.dr_shopPopup').stop(false,false).fadeOut();
+			$('.dr_blackwall').stop(false,false).fadeOut();
+		});
+
+        //钻戒列表点击不同种类筛选时,筛选值的颜色、和筛选情况展示,针对a标签列表(没遍历的)
+		/*$('.drring_highsearch-same.weight a').on('click',function(){
+            $(this).addClass('xz');
+            $(this).css({'color': '#dbc7ba'});
+		});*/
+		
+		//添加筛选条件(爱的礼物)
+		$("#highsearch .xz").each(function(){
+			var url = '';
+			if($(this).attr('dr-type') == 2) {
+				url = $(this).data('href');
+			} else {
+				url = $(this).attr('href');
+			}
+
+			addsearch($(this).text(),$(this).attr('dr-type'),url);
+		})
+
+		//添加筛选条件(求婚钻戒)
+		$("#highsearchDarry .xz").each(function(){
+			var url = $(this).attr('url');
+			// if($(this).attr('dr-type') == 2) {
+			// 	url = $(this).data('href');
+			// } else {
+			// 	url = $(this).attr('href');
+			// }
+			
+			addsearch($(this).text(),$(this).attr('dr-type'),url);
+		})
+		// $('#highsearch a').die().live('click',function(){
+		// 	addsearch($(this).text(),$(this).attr('dr-type'));
+		// });
+		//移除筛选条件
+		$('#searchList a').die().live('click',function(){
+			$(this).remove();
+		});
+		//正则限制输入价格区间
+		var reg =  new RegExp('^([1-9][0-9]*)$');
+		$('#minPrice,#maxPrice').die().live('keyup',function(){
+			if(!reg.test($(this).val())){
+				$(this).val('');
+			}
+		});
+		$('#priceBtn').die().live('click',function(){
+			var minPrice = parseInt($('#minPrice').val());
+			var maxPrice = parseInt($('#maxPrice').val());
+			if(reg.test(minPrice) && !reg.test(maxPrice)){
+				addsearch(minPrice+'以上',4);
+				return;
+			}else if(!reg.test(minPrice) && reg.test(maxPrice)){				
+				addsearch(maxPrice+'以下',4);
+				return;
+			}else if(reg.test(minPrice) && reg.test(maxPrice)){	
+				if(minPrice > maxPrice){
+					return;
+				}
+				addsearch(minPrice+'-'+maxPrice,4);
+				return;
+			}
+		});
+		//调用图片滚动组件(收藏夹里)
+		var Colectscrol = new Imgscroll().init({
+			id: '#shopPopup',
+			prev: '#shopPopup .thing_pre,#shopPopup .thing_preend',
+			next: '#shopPopup .thing_next,#shopPopup .thing_nextend',
+			scrollNum: 1,
+			theMag: 21,
+			theway:false,
+			ntendClass:'thing_nextend',
+			ntClass:'thing_next',
+			pendClass:'thing_preend',
+			peClass:'thing_pre'
+		});
+
+		// //饰品列表页价格区间搜索
+		// function btnPriceSearch(url) {
+		// 	console.log(123123);
+		// 	var txt1 = $("#minPrice").val();
+		// 	var txt2 = $("#maxPrice").val();
+		// 	if (txt1 == "" && txt2 == "") {
+		// 		alert("请输入搜索条件");
+		// 		return false;
+		// 	}
+		// 	window.location.href = url + "&price=" + txt1 + "-" + txt2;
+		// }
+		//显示隐藏系列筛选
+		$('.moreSeries').off('click').on('click',function(){
+			$('.drring_series').toggleClass('drring_seriesShow');
+			$(this).toggleClass('select');
+		});
+
+		//点击关闭弹窗
+		$('.Popup_close,.goto_shop').off('click').on('click',function(){
+			$('.dr_sametc,.dr_blackwall, .Verifica_nobuy, .dr_shopPopup').hide();
+			clearInterval(window.loginInterval);
+			window.clearInterval(window.toUrl);
+		});
+
+		//商品搜索
+		$('#goodsSearch').click(function(){
+			var searchInput = $('#searchInput').val();
+			if ($.trim(searchInput) == "") {
+				searchInput = $('#searchInput').attr('placeholder');
+				// alert('请输入关键字!');
+				// return false;
+			}
+			var url = $(this).attr('url');
+			if(url.indexOf('?') <= -1){
+				url = url +"?searchKeyword=" + searchInput;
+			}else{
+				url = url + "&searchKeyword=" + searchInput;
+			}
+			// var url = window.location.origin + window.location.pathname + "?searchKeyword=" + searchInput;
+			window.location.href = url;
+		});
+	});	
+});
+//显示弹窗
+function showPopup(){		
+	$('.dr_blackwall,.dr_shopPopup').stop(false,false).show();
+}
+//添加筛选条件
+function addsearch(text,type,url){
+	var aList = $('#searchList a[dr-type="'+type+'"]');
+	if(aList.length>0){
+		aList.html(text);
+	}else{
+		$('#searchList').append('<a href="'+url+'" dr-type="'+ type +'">'+ text +'</a>');
+		$('.noresult h4').append(' ' +text+ '');
+	}
+}
+
+//饰品列表页价格区间搜索
+function btnPriceSearch(url) {
+	var txt1 = $("#minPrice").val();
+	var txt2 = $("#maxPrice").val();
+	if (txt1 == "" && txt2 == "") {
+		alert("请输入搜索条件");
+		return false;
+	}
+	window.location.href = url + "&price=" + txt1 + "-" + txt2;
+}

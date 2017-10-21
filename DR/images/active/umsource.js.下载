@@ -1,0 +1,25 @@
+/*
+ * 实体店
+ * 2016.10.11
+ * */
+define(function (require, exports, module) {
+    /*通过 require 引入依赖*/
+    require('jquery');
+
+    $(function () {
+        //实例化
+        var utm_source = getUrlParam('utm_source');
+        if(utm_source == null){
+            utm_source = '';
+        }
+        $.get(umsourceUrl, {utm_source: utm_source}, function (res) {
+            return true;
+        });
+    });
+});
+
+function getUrlParam(name) {
+ var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+ var r = window.location.search.substr(1).match(reg); //匹配目标参数
+ if (r != null) return unescape(r[2]); return null; //返回参数值
+}

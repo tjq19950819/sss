@@ -1,0 +1,290 @@
+/*
+ 首页实体店临时救急js
+2016.01.22
+*/
+define(function(require,exports,module){
+	/*通过 require 引入依赖*/
+	require('jquery');
+	var Banner = require('js/modules/banner.js');
+	var twoTabs = require('js/modules/twoTabs.js');
+	var Imgscroll = require('js/modules/scrolling.js');
+	  
+	$(function(){
+		//点击全国一览显示地图
+		$('#drMapLook').off('click').on('click',function(){
+			$('#drMapShow').show();
+			$('#drhongkong').hide();
+			$('.drstore-tabin').hide();
+		});
+		//点击香港显示香港店
+		$('#drlookhk').off('click').on('click',function(){
+			$('#drMapShow').hide();
+			$('.drstore-tabin').hide();
+			$('#drtheHK').show();
+		});
+
+		//点击显示其他店铺
+		$('.drstore_alllist span').off('click').on('click',function(){
+			$('.drstore_alllist span').removeClass('drstore-shopnamehover');
+			$(this).addClass('drstore-shopnamehover');
+			$('#drMapShow').hide();
+			$('#drtheHK').hide();
+			$('.drstore-tabin.other').show();
+			var id = $(this).data('id');
+			$.get(showUrl, {id: id}, function(res){
+				if (res.result == 0) {
+					var str = '<div class="drstore-shop other" style="display:block">\
+						<!--地址-->\
+						<div class="drstore-adress">\
+							<!--透明背景-->\
+							<div class="drstore-adressbk"></div>\
+							<!--透明背景end-->\
+							<div class="drstore-adressxq">\
+								<div class="drstore-tittle">\
+									<span>'+ res.data.name +'</span>\
+									<img class="showMapBtn" dt="store/dt/'+ res.data.alias +'" name="'+ res.data.name +'" address="'+ res.data.address +'"src="/bundles/acmefrontend/img/index/checkdt.jpg" />\
+								</div>\
+								<p>'+ res.data.address + '</p>\
+								<p>营业时间：'+ res.data.open +'（节假日照常接待）<br />\
+								预约电话：'+ res.data.telephone +'</p>\
+								<a href="/store/show-'+ res.data.alias +'">立即预约体验</a>\
+							</div>\
+						</div>\
+						<!--地址end-->\
+						<!--轮播图-->\
+						<ul class="drstore-shopul">\
+							<li>\
+								<a href="/store/show-'+ res.data.alias +'"><img src="'+ res.data.pc_images +'" /></a>\
+							</li>\
+						</ul>\
+						<!--轮播图end-->\
+						<!--小点-->\
+						<div class="drbanner_xdcort drshop_xdcort">\
+							<ul class="drbanner_xd"></ul>\
+						</div>\
+						<!--小点end-->\
+					</div>';
+
+					$('.drstore-shop.other').replaceWith(str);
+				}
+			});
+		});
+
+		//调用banner组件
+		 var indexBan = new Banner().init({
+		 	id:'#drHomeBan',
+		 	btnListId:'#drHomeBanxd',
+		 	btnListClass:'drbanner_click',
+            nextBtn:'#drbanNext',
+            prevBtn:'#drbanPrev'
+		 });		 
+		//店铺banner
+		$('.drstore-shopul').each(function(index){
+			new Banner().init({
+				id: $(this),
+				btnListId:$(this).next('.drshop_xdcort').find('ul.drbanner_xd'),
+				btnListClass:'drbanner_click'
+			});		 
+		});
+		//店铺区域切换效果
+		var shopTabs = new twoTabs().init({
+			id:'#drstore-tab',
+			firstWidth:98,
+			otherWidth:125,
+			timer: 500
+		});
+		//显示店铺地址
+		$('.drstore-tittle img').off('click').on('click',function(){
+			showIndexMap();
+		});
+		//关闭店铺地址
+		$('.drshopMapInfo-close').off('click').on('click',function(){
+			$('.dr_blackwall').hide();
+			$('.drshopMap').stop(false,false).fadeOut();
+		});		
+		
+		//点击地图店铺分页
+		$(document).on('click','.drstore-mapInfo-pager a',function(){
+		// $('.drstore-mapInfo-pager a').off('click').on('click',function(){
+			$('.drstore-mapInfo-pager a').removeClass('activate');
+			$(this).addClass('activate');
+
+			var page = $(this).html();
+			var province = $('.drstore-map a.hasShop.activate').html();
+			shopShow(shopUrl, province, page);
+            //$('.drstore-shopList .drstore-shopDesc').hide().eq($(this).index()).show();
+		});
+		//点击地图省份
+		$('.drstore-map a.hasShop').off('click').on('click',function(){
+			$('.drstore-map a.hasShop').removeClass('activate');
+			$(this).addClass('activate');
+			var province = $('.drstore-map a.hasShop.activate').html();
+			shopShow(shopUrl, province);
+		});
+
+		//异步获取分页
+		function shopShow(shopUrl, province, page){
+			if (typeof page == "undefined") {
+				page = 1;
+			}
+			$.get(shopUrl, {province : province, page: page}, function(res){
+
+				str = '<div class="drstore-mapInfo-main" style="display:block;">\
+							<h4>'+ province +'</h4>\
+							<div class="drstore-shopList">\
+		         			<div class="drstore-shopDesc" style="display:block">';
+
+		        for (var i = 0; i < res.data.result.length; i++) {
+		        	 str += '<div class="drstore-mapInfo-shop">\
+		                        <h5><a href="/store/'+ res.data.result[i].alias +'">' + res.data.result[i].name + ' ></a></h5>\
+		                        <p title="'+ res.data.result[i].title +'">'+ res.data.result[i].address +'</p>\
+		                        <p>营业时间：'+ res.data.result[i].open +'</p>\
+		                        <p>预约电话：'+ res.data.result[i].telephone +'</p>\
+		                    </div>';
+		        }
+		        str +=     '</div>\
+		        	    </div>\
+							<div class="drstore-mapInfo-pager">';
+				for (var i = 1; i <= res.data.page.length; i++) {
+					if ( i == page){
+						str +='<a href="javascript:;" class="activate">'+ i +'</a>'
+					} else {
+						str +='<a href="javascript:;">'+ i +'</a>'
+					}
+				}
+
+				str +='</div>\
+						</div>'
+
+				$('.drstore-mapInfo-main').replaceWith(str);
+			});	
+		}
+		//默认显示广东
+		if (typeof shopUrl  != 'undefined') {
+			shopShow(shopUrl, "广东", 1);
+		}
+		// 点击城市执行以下代码
+		// $('#drMapShow').hide();
+		// $('.drstore-tabin').show();
+		
+		//调用图片滚动组件(华东区)
+		var Thescrol1 = new Imgscroll().init({
+			id: '#shop1',
+			prev: '#shop1 .drstore-pre',
+			next: '#shop1 .drstore-next',
+			scrollNum: 1,
+			box:'.drstore_alllist',
+			boxlist:'span',
+			theMag:0,
+			Alllist:5,
+			overlist:4,
+			theway:true,
+			overnum:7,
+			thebutton:true
+		});
+		//调用图片滚动组件(华北区)
+		var Thescrol2 = new Imgscroll().init({
+			id: '#shop2',
+			prev: '#shop2 .drstore-pre',
+			next: '#shop2 .drstore-next',
+			scrollNum: 1,
+			box:'.drstore_alllist',
+			boxlist:'span',
+			theMag:0,
+			Alllist:5,
+			overlist:4,
+			theway:true,
+			overnum:7,
+			thebutton:true
+		});
+		//调用图片滚动组件(华中区)
+		var Thescrol3 = new Imgscroll().init({
+			id: '#shop3',
+			prev: '#shop3 .drstore-pre',
+			next: '#shop3 .drstore-next',
+			scrollNum: 1,
+			box:'.drstore_alllist',
+			boxlist:'span',
+			theMag:0,
+			Alllist:5,
+			overlist:4,
+			theway:true,
+			overnum:7,
+			thebutton:true
+		});
+		//调用图片滚动组件(华南区)
+		var Thescrol4 = new Imgscroll().init({
+			id: '#shop4',
+			prev: '#shop4 .drstore-pre',
+			next: '#shop4 .drstore-next',
+			scrollNum: 1,
+			box:'.drstore_alllist',
+			boxlist:'span',
+			theMag:0,
+			Alllist:5,
+			overlist:4,
+			theway:true,
+			overnum:7,
+			thebutton:true
+		});
+		//调用图片滚动组件(西南区)
+		var Thescrol5 = new Imgscroll().init({
+			id: '#shop5',
+			prev: '#shop5 .drstore-pre',
+			next: '#shop5 .drstore-next',
+			scrollNum: 1,
+			box:'.drstore_alllist',
+			boxlist:'span',
+			theMag:0,
+			Alllist:5,
+			overlist:4,
+			theway:true,
+			overnum:7,
+			thebutton:true
+		});
+		
+		//首页后台程序js代码处
+		
+	});
+	function showIndexMap(){
+		$('.dr_blackwall').show();
+		$('.drshopMap').stop(false,false).fadeIn();
+	}
+
+	$(document).on('click','.showMapBtn',function(){
+		var name = $(this).attr('name');
+		var dtUrl = $(this).attr('dt');
+		var address = $(this).attr('address');
+		$('#h_shopname').html(name);
+		$('#p_address').html(address);
+		$('#shopIframe').attr('src', dtUrl);
+		$('.dr_blackwall').show();
+		$('.shopMapMain').show();
+	});
+
+	$(document).on('click','#showMapBtn',function(){
+		var name = $(this).attr('name');
+		var dtUrl = $(this).attr('dt');
+		var address = $(this).attr('address');
+		$('#h_shopname').html(name);
+		$('#p_address').html(address);
+		$('#shopIframe').attr('src', dtUrl);
+		$('.dr_blackwall').show();
+		$('.shopMapMain').show();
+	});
+
+	$('#closeMapBtn').off('click').on('click',function(){
+		$('.shopMapMain').hide();
+		$('.dr_blackwall').hide();
+	});
+});
+//定时消失
+function indexwronghide() {
+    $('#dr_sfwrong').hide();
+    $("#dr_sfwrong").html("<p>Darry Ring严格规定男士凭证件一生仅能定制一枚，象征男人一生真爱的承诺。输入证件号码即可查询购买记录。</p>");
+    $("#dr_sfwrong").addClass("index_yz-word");
+    $("#dr_sfwrong").removeClass("drmember_yz-wrong");
+}
+
+
+

@@ -1,0 +1,374 @@
+@charset"UTF-8";
+*{
+	margin: 0;
+	padding:0;
+}
+a{
+	font-size: 18px;
+	text-decoration: none;
+    outline: none;
+}
+ul{
+	list-style: none;
+}
+body{
+    font-family: simsun;
+	overflow-x: hidden;
+}
+img{
+	vertical-align: middle;
+}
+.container{
+	width: 1000px;
+	margin: 0 auto;
+	clear: both;
+}
+.fr{
+	float: right;
+}
+.fl{
+	float: left;
+}
+/*头部*/
+.cart_head{
+	height: 88px;
+    border-bottom: 1px solid #e8cbbd;
+    box-shadow: 0 0 4px #aaa;
+}   
+.cart_head a{
+	  background: url(../img/same/bottom.png) no-repeat right center;
+}
+.cart_head .dr_logo{
+	margin-top: 9px;
+	margin-left: 17px;
+	display: inline-block;
+}
+.cart_head .dr_logo>a{
+	display: inline-block;
+}
+.dr_member{
+	padding-top: 36px;
+}
+.dr_member a{
+	font-size: 12px;
+	color: #C67C59;
+	line-height: 20px;
+}
+.dr_member-left{
+	position: relative;
+}
+.dr_member .userName{
+	display: inline-block;
+	font-size: 12px;
+	line-height: 20px;
+	padding-left: 9px;
+	padding-right: 15px;
+	background: url(../images/bottom.png) no-repeat right center;
+}
+.loginIn{
+	display: none;
+	margin: 3px auto 0;
+	width: 82px;
+    padding: 8px 0;
+    background: #fff;
+    border: 1px solid #F1F1F1;
+   	position: absolute;
+   	top:20px;
+   	left:22px;
+}
+.loginIn a {
+    display: block;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 16px;
+    background: none;
+}
+
+.dr_member .dr_member-left:hover  .loginIn{
+	display: block;
+}
+ .dr_member-left i {
+    display: inline-block;
+    padding: 0 15px 0 14px;
+    background: url(../images/hr.png) no-repeat right center;
+    font-size: 12px;
+    color: #8d8d8d;
+    font-family:"microsoft yahei", arial;
+	font-size: 12px;
+	line-height: 20px;
+
+}
+ .dr_member-left .help-right{
+ 	display: inline-block;
+ 	line-height: 20px;
+ 	padding-left: 30px;
+ }
+ .dr_member-left .help-right span{
+ 	position: relative;
+ 	top:2px;
+ }
+ .checkstand_head {
+ 	padding-top: 40px;
+ 	height: 45px;
+	box-sizing:content-box;
+ }
+ .checkstand_head h3 {
+    font-size: 18px;
+    font-family: 微软雅黑;
+    color: rgb(51, 51, 51);
+    padding-left: 15px;
+    display: inline-block;
+    float: left;
+    border-left: 2px solid rgb(198, 124, 89);
+    font-weight: normal;
+    line-height: 18px;
+}
+.shopping_steps{
+	display: inline-block;
+}
+.shopping_steps span {
+    display: inline-block;
+    width: 198px;
+    height: 100%;
+    line-height: 23px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+    background: #ccc url(../images/steps_bg.png) center no-repeat;
+}
+.sp_steps1,.sp_steps2,.sp_steps3{
+	float: left;
+}
+
+.shopping_steps p{
+	text-align: center;
+	font-size: 12px;
+	line-height: 12px;
+}
+.sp_steps1 p{
+	color: rgb(122, 189, 84);
+}
+
+.sp_steps1 span{
+	background-color: #7abd54;
+}
+.sp_steps2 p,.sp_steps3 p{
+	color: #ccc;
+}
+.dr-shoptable{
+    margin: 20px 0;
+    font-size: 12px;
+    border: 1px solid #e0e0e0;
+    background: #f3f3f3;
+    height: 13px;
+    padding: 15px 0;
+	text-align: center;
+	box-sizing:content-box;
+	color:rgb(102, 102, 102);
+}
+.shop-all{
+	padding-left: 20px;
+	width: 146px;
+	text-align: left;
+}
+.check_all{
+	position: relative;
+	top:3px;
+}
+.shop-goods{
+	width: 489px;
+}
+.shop-price{
+	width: 196px;
+}
+.shop-oper{
+	width:147px; 
+}    
+.goodstable{
+ 	margin: 20px 0;
+    font-size: 12px;
+    border: 1px solid #e0e0e0;
+    height: 152px;
+    position: relative;
+ }   
+.goodstable>input{
+	margin: 55px 12px 0 24px;
+}
+.goodstable>img{
+	margin: 15px 20px 15px 0;
+}
+.move-delete {
+	width: 145px;
+	height: 60px;
+	padding: 15px 0;
+}
+.move-delete a{
+	color: #C67C59;
+	font-size: 12px;
+	line-height: 30px;
+}
+.pay_money{
+	color: #ff5d5b;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 90px;
+    width: 150px;
+    text-align: center;
+}
+.ringbuy_Choose-third{
+	width: 260px;
+	position: relative;
+	border: 1px solid #b0b0b0;
+    border-radius: 3px;
+    margin-top: 30px;
+    background: #fff;
+    height: 28px;
+}
+.ringbuy_Choose-third input{
+	padding: 5px 0 5px 4px;
+    width: 180px;
+    border: none;
+    outline: none;
+    margin-top: 1px;
+}
+.ringbuy_Choose-third i{
+	display: inline-block;
+    width: 25px;
+    border-left: 1px solid #aeaeae;
+    font-size: 16px;
+    color: #C67C59;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top:0;
+    height: 28px;
+}
+.ringbuy_Choose-third .heart{
+	right: 63px;
+}
+.ringbuy_Choose-third .strange{
+	right: 37px;
+}
+.ringbuy_Choose-third  a{
+	display: inline-block;
+    font-size: 12px;
+    color: #c67c59;
+    vertical-align: middle;
+    border-left: 1px solid #aeaeae;
+    width: 36px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top:0;
+    line-height: 28px;
+}
+.dr-style{
+	width: 266px;
+	line-height: 90px;
+	color: #666;
+}
+.dr-style>strong.forever{
+	margin-right: 20px;
+}
+.goods-bottom{
+	height: 60px;
+	width: 830px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-top: 1px dashed #e0e0e0;
+	line-height: 60px;
+}
+.goods-bottom strong{
+	display: inline;
+	color: #666;
+	margin-right: 20px;
+}
+.goods-bottom p{
+	display: inline;
+	color: #999;
+	margin-right: 150px;
+}
+.goods-bottom a{
+	font-size: 12px;
+	color: rgb(198, 124, 89);
+	margin-left: 40px;
+}
+.shoppingcart_pay{
+	height: 50px;
+    background: #f9f9f9;
+    border: 1px solid #f1f1f1;
+    font-size: 12px
+}
+
+.shoppingcart_pay .scfoot_left{
+	padding-left: 20px;
+	line-height: 50px;
+	display: inline-block;
+}
+.shoppingcart_pay p{
+	display: inline-block;
+	font-size: 12px;
+	font-family: 宋体;
+	color: #666;
+}
+.shoppingcart_pay a{
+	font-size: 12px;
+	font-family: 宋体;
+	color: #666;
+	display: inline-block;
+}
+.shoppingcart_pay a:hover{
+	color: #C67C59;
+}
+.shoppingcart_pay .scfoot_right{
+	display: inline-block;
+	margin-left: 286px;
+}
+.shoppingcart_pay strong{
+	color: #ff5d5b;
+    margin: 0 1px;
+    font-size: 13px;
+}
+.shoppingcart_pay .scfoot_right p{
+	margin-right: 15px;
+}
+.shoppingcart_pay .scfoot_right a{
+	display: inline-block;
+    width: 160px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 50px;
+    background: #C67C59;
+    color: #fff;
+    text-align: center;
+    margin-left: 30px;
+}
+.shoppingcart_pay .scfoot_right a:hover{
+	background: #d49e85;
+}
+.shopping_security {
+    font-size: 12px;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+.shopping_security span {
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    margin-left: 20px;
+    padding-left: 25px;
+    background: url(../images/ico-service.png) 0 0 no-repeat;
+    color: #666;
+}
+.shopping_security .security1{
+	background-position: 0 0;
+}
+.shopping_security .security2{
+	background-position: 0 -35px;
+}
+.shopping_security .security3{
+	background-position: 0 -70px;
+}

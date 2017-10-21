@@ -1,0 +1,495 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0036)https://passport.darryring.com/other -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Drlogin</title>
+<link rel="stylesheet" href="./drpassport.css">
+</head>
+<body>
+<!--登录注册弹窗-->
+<div class="dr_sametcborder">
+	<!--登录-->
+	<div class="dr_Thelogin dr_samezd">
+		<h3>DR族-登录</h3>
+		<!--报错信息-->
+		<div class="theSame_wrong" style="display:none;">
+			<span>邮箱格式/手机号码不正确，请重新输入</span>
+		</div>
+		<!--报错信息end-->
+		<!--手机验证码登录-->
+		<div class="phone_dl">
+			<input type="text" class="smtxt loginUser" name="mobile" placeholder="请输入您的手机号码">
+			<input type="hidden" name="islogin" value="1">
+			<div class="Verificacode fix">
+				<input type="text" class="smtxt loginYzm fl" name="smscode" placeholder="请输入验证码">
+				<span class="fr">获取语音验证码</span>
+			</div>
+			<p class="actionwd_same" style="display:none;">收不到短信验证码?获取<a href="javascript:;">语音验证码1</a></p>
+			<p class="actionwd_same" style="margin-top:12px;">使用<a href="javascript:;" class="usePassWord">密码登录</a></p>
+		</div>
+		<!--手机验证码登录end-->
+		<!--密码登录-->
+		<div class="password_dl">
+			<input type="text" id="loginUser" class="smtxt loginUser" name="email" placeholder="请输入您的邮箱/手机号码" value="">
+			<input type="password" id="loginPwd" class="smtxt loginPassword" name="password" placeholder="请输入密码" value="">
+			<div class="tcsame_check fix">
+							<a href="http://passport.darryring.com/forget?lang=cn" target="_blank" class="fr">忘记密码?</a>
+							<!-- <a href="http://passport.darryring.com/forget" target="_blank" class="fr">忘记密码?</a> -->
+				<input type="checkbox" value="1" id="isChange">
+				<label>记住密码</label>
+			</div>
+			<p class="actionwd_same">使用<a href="javascript:;" class="usePhone">手机验证码登录</a></p>
+
+		</div>
+		<!--密码登录end-->
+		<div class="tcsame_button">
+			<a href="javascript:;" id="loginSubmit" class="Button_dl" style="display:none;">登录</a>
+			<a href="javascript:;" id="loginDisablet" class="Button_dl Button_disable">登录</a>
+			<a href="javascript:;" class="Button_join">加入DR族</a>
+		</div>
+		
+		<div class="tcsame_third">
+			<span>第三方账户登录</span>
+			<a href="javascript:;" class="third_qq"></a>
+			<a href="javascript:;" class="third_wx"></a>
+			<a href="javascript:;" class="third_wb"></a>
+			<a href="javascript:;" class="third_zfb"></a>
+		</div>
+		
+	</div>
+	<!--登录end-->
+	<!--注册-->
+	<div class="dr_Registered dr_samezd" style="display: none;">
+		<h3>加入DR族</h3>
+		<!--报错信息-->
+		<div class="theSame_wrong" style="display:none;">
+			<span>邮箱格式/手机号码不正确，请重新输入</span>
+		</div>
+		<!--报错信息end-->
+		<input type="text" class="smtxt loginphone" name="mobile" placeholder="请输入您注册的手机号码">
+		<input type="password" class="smtxt loginPassword" name="rpassword" placeholder="请输入长度为6-20位数的密码">
+		<!--<input type="password" class="smtxt loginPassword" name="spassword" placeholder="请输入长度为6-20位数的密码"/>-->
+		<input type="hidden" class="used" value="0">
+		<div class="Verificacode fix">
+			<input type="text" class="smtxt loginYzm fl" name="code" placeholder="请输入验证码">
+			<span class="fr">获取语音验证码</span>
+		</div>
+		<div class="tcsame_check tchref_color fix">
+			<input type="checkbox" name="check">
+			<span>同意Darry Ring用户<a href="http://www.darryring.com/help/46" target="_blank">注册协议</a>和<a href="http://www.darryring.com/help/47" target="_blank">隐私条款</a></span>
+		</div>
+		<div class="tcsame_button Button_reg">
+			<a href="javascript:;" class="Button_join">立即加入DR族</a>
+		</div>
+		<p class="Regis_todl fix">
+			<a href="javascript:;" class="fr">&gt; 已有帐户 登录</a>
+		</p>
+	</div>
+	<!--注册end-->
+</div>
+
+<!--登录注册弹窗end-->
+
+<!--JS begin-->
+<script src="./jquery-1.8.3.min.js.下载"></script>
+<script type="text/javascript">
+$(function(){
+		$('.dr_Thelogin').show();
+	$('.dr_Registered').hide();
+		//点击出现注册框
+	$('.Button_join').off('click').on('click',function(){
+		$('.dr_Thelogin').hide();
+		$('.dr_Registered').show();
+       	$('.theSame_wrong').hide();
+		hideLoginBtn();
+	});
+	//点击出现登录框
+	$('.Regis_todl a').off('click').on('click',function(){
+		$('.dr_Thelogin').show();
+		$('.dr_Registered').hide();
+       	$('.theSame_wrong').hide();
+	});
+	//获取语音验证码
+	$('.Verificacode span').off('click').on('click',function(){
+
+		var reg = $('.loginphone').parent().css('display');
+
+	    if (reg == 'none') {
+            var mobile = $('input[name="mobile"]').val()
+            var islogin = 1;
+	    }else{
+            var mobile =  $('.loginphone').val()
+            var islogin = 2;
+	    } 
+        
+
+    	var password = $('input[name="rpassword"]').val()
+    	var spassword = $('input[name="spassword"]').val()
+        $('.theSame_wrong').hide();
+
+    	if(mobile == '' ){
+           errorShow('请输入手机号码');
+           return false;
+    	}
+
+    	if(!checkMobile(mobile)){
+           errorShow("手机号码格式错误 请重新输入");
+           return false;
+    	}
+        var used = 0;
+        //var islogin = $('input[name="islogin"]').val()
+
+        //Verificacode
+        var smslogin = ($('.Verificacode').css('display'));
+
+        if(checkMobile(mobile) && islogin == 2 ){ 
+         $.ajax({
+			type: "POST", //用POST方式传输
+			async : false,
+			url: '/isusedmobile', //目标地址
+			data: "mobile=" + mobile,
+			success: function (msg){
+			//表示手机已经注册
+			if(msg.result === -1 ){
+               //$('.used').val(1); 
+                 used = 1
+			 }
+			}
+		 });
+		 
+         if(used == 1){
+             errorShow("该手机号码已被注册");
+            
+             return false;
+          }
+
+        }
+        if(smslogin != 'block' ){
+	    	 if(password == '' ){
+	           errorShow("请填写密码");
+	           return false;
+	    	}
+
+	    	if(password != spassword ){
+	           errorShow("密码与确认密码不一致 请重新输入");
+	           return false;
+	    	}
+    	}
+		$.ajax({
+			type: "POST", //用POST方式传输
+			url: '/othersendsms', //目标地址
+			data: "mobile=" + mobile ,
+			success: function (msg){
+			//提示发送语音成功
+					if(msg.result === 0 ){
+		              $(this).addClass('sending').html("120 秒后重新获取").attr('disabled','true');
+				      $('.theSame_wrong').addClass('thejt_sucess').find('span').html("获取成功 请留意接听125909888767的来电");
+				      $('.theSame_wrong').removeClass('thejt_sucess');
+				      $('.Verificacode span').off('click');
+				      $('.theSame_wrong').show();
+				      var gtpTimeNum = 120;
+				      var gtpTimer = setInterval(function(){
+						  gtpTimeNum--;
+						  $('.Verificacode span').html(gtpTimeNum+"秒后重新获取");
+						  if(gtpTimeNum <= 0){
+							clearInterval(gtpTimer);
+							$('.Verificacode span').on('click');
+						 	$('.Verificacode span').removeClass('sending').html("获取语音验证码").attr('disabled','false');
+						 }
+				     },1000);
+				  }
+		   }
+		});  
+		
+
+	
+	});
+   //登录 loginDisablet loginSubmit
+   $('#loginSubmit').off('click').on('click',function(){
+    	var email = $('input[name="email"]').val();
+    	var password = $('input[name="password"]').val();
+    	var isChange = $('#isChange:checked').val();
+    	if (typeof(isChange) === 'undefined') {
+    		isChange = 0;
+    	}
+
+		$.ajax({
+			type: "POST", //用POST方式传输
+			url: '/other', //目标地址
+			data: "data[email]=" + email +"&data[password]=" + password + "&remember=" + isChange,
+			success: function (msg){
+			//提示发送语音成功
+			if(msg.result === 0 ){
+			  // $('.dr_Thelogin').hide();
+			   $('.dr_Thelogin').height('300px');
+			   $('.dr_Thelogin').html("正在验证中,请稍等");
+			   $('iframe').hide(); 
+               // parent.location.reload();
+			 }else{
+			 	hideLoginBtn();
+            	errorShow(msg.message);
+			 }
+			}
+		});  
+    });
+     //登录 loginDisablet loginSubmit
+   $('#loginDisablet').off('click').on('click',function(){
+
+   	    var smslogin = ($('.Verificacode').css('display'));
+
+   	    if(smslogin =='block'){
+            var email = $('input[name="mobile"]').val();
+    	    var smscode = $('input[name="smscode"]').val();
+   	    }else{
+   	       var email = $('input[name="email"]').val();
+    	   var password = $('input[name="password"]').val();
+   	    }
+
+    
+		$.ajax({
+			type: "POST", //用POST方式传输
+			url: '/other', //目标地址
+			data: "data[email]=" + email +"&data[password]=" + password+"&data[code]="+smscode,
+			success: function (msg){
+			//提示发送语音成功
+			if(msg.result === 0 ){
+			  // $('.dr_Thelogin').hide();
+			   $('.dr_Thelogin').height('300px');
+			   $('.dr_Thelogin').html("正在验证中,请稍等");
+			   $('iframe').hide(); 
+               // parent.location.reload();
+			 }else{
+			 	hideLoginBtn();
+            	errorShow(msg.message);
+			 }
+			}
+		});  
+    });
+
+   setTimeout(function(){isundefined();},100);
+   $('#loginUser').keyup(function() {
+   		isundefined();
+   }).change(function(){
+   		isundefined();
+   });
+   $('#loginPwd').keyup(function() {
+   		isundefined();
+   }).change(function(){
+   		isundefined();
+   });
+   function hideLoginBtn(){
+	 	$('input[name="password"]').val('');
+		$('#loginSubmit').hide();
+		$('#loginDisablet').show();
+		$('body').off('keyup');
+   }
+   function isundefined(){
+   		if($('#loginUser').val() != ''  && $('#loginPwd').val().length >= 6){
+   			$('#loginSubmit').show();
+   			$('#loginDisablet').hide();
+   			$('body').on('keyup',function(event){
+	   			keySubmit(event);
+	    	});
+   		}else{
+   			$('#loginSubmit').hide();
+   			$('#loginDisablet').show();
+   			$('body').on('keyup',function(event){
+	   			keySubmit(event);
+	    	});
+   		}
+   }
+   function keySubmit(event){
+        if (event.keyCode == 13) {//keyCode=13是回车键
+			event.keyCode = 9;
+        	event.returnValue = false;
+        	if($('#loginUser').val() == '' || $('#loginPwd').val().length < 6){
+        		errorShow('请填写完善的登录信息!');
+        	}else{
+        		$('#loginSubmit').click();
+        	}
+    	}
+    } 
+    //注册
+    $('.Button_reg').off('click').on('click',function(){
+      //  var mobile = $('input[name="mobile"]').val()
+        var mobile =  $('.loginphone').val()
+    	var password = $('input[name="rpassword"]').val()
+    	//var spassword = $('input[name="spassword"]').val()
+    	var code = $('input[name="code"]').val()
+    	var regtype = GetQueryString('regtype');
+
+    	if (!regtype) {
+            regtype = 1;
+    	}
+
+        $('.theSame_wrong').hide();
+
+    	if(mobile == '' ){
+           errorShow("请输入手机号码");
+           return false;
+    	}
+
+    	if(!checkMobile(mobile)){
+           errorShow("手机号码格式错误 请重新输入");
+           return false;
+    	}
+
+    	 if(password == '' ){
+           errorShow("请填写密码");
+           return false;
+    	}
+
+    	// if(password != spassword ){
+     //       errorShow("密码与确认密码不一致 请重新输入");
+     //       return false;
+    	// }
+
+    	if(code == '' ){
+           errorShow("请输入验证码");
+           return false;
+    	}
+
+    	if(!$('input[name="check"]').is(':checked')){
+           errorShow("请同意注册协议及隐私条款");
+           return false;
+    	}
+
+    	$.ajax({
+			type: "POST", //用POST方式传输
+			url: '/register', //目标地址
+			data: "mobile=" + mobile +"&password=" + password + "&code="+code + '&regtype='+regtype,
+			success: function (msg){
+			//提示发送语音成功
+			$('.theSame_wrong').addClass('thejt_sucess')
+			errorShow(msg.message);
+			if(msg.result === 0 ){
+
+              // parent.location.reload();
+			 }
+			}
+		});  
+
+    });
+   
+   //打开新窗口
+   $('.third_zfb').off('click').on('click',function(){
+   	   var win = window.open("http://passport.darryring.com/syncLogin/alipay","支付宝登录","height=500,width=600,top=300,left=600");
+   	   var gtpTimer = setInterval(function(){
+			  
+			  if(getCookie('token')){
+				clearInterval(gtpTimer);
+				win.close()
+
+			 }
+	   },1000);
+   });
+
+      //打开新窗口
+   $('.third_qq').off('click').on('click',function(){
+   	   var win = window.open("http://passport.darryring.com/syncLogin/qq","qq登录","height=500,width=600,top=300,left=600");
+   	   var gtpTimer = setInterval(function(){
+			  
+			  if(getCookie('token')){
+				clearInterval(gtpTimer);
+				win.close()
+
+			 }
+	   },1000);
+   });
+
+      //打开新窗口
+   $('.third_wx').off('click').on('click',function(){
+   	   var win = window.open("http://passport.darryring.com/syncLogin/weixin","微信登录","height=500,width=600,top=300,left=600");
+   	   var gtpTimer = setInterval(function(){
+			  
+			  if(getCookie('token')){
+				clearInterval(gtpTimer);
+				win.close()
+
+			 }
+	   },1000);
+   });
+
+      //打开新窗口
+   $('.third_wb').off('click').on('click',function(){
+   	   var win = window.open("http://passport.darryring.com/syncLogin/weibo","微博登录","height=500,width=600,top=300,left=600");
+   	   var gtpTimer = setInterval(function(){
+			  
+			  if(getCookie('token')){
+				clearInterval(gtpTimer);
+				win.close()
+
+			 }
+	   },1000);
+   });
+   
+   
+   //点击密码登录切换
+	$('.usePassWord').off('click').on('click',function(){
+		$('.password_dl').show();
+		$('.phone_dl').hide();
+	});
+	//点击手机验证码登录切换
+	$('.usePhone').off('click').on('click',function(){
+		$('.password_dl').hide();
+		$('.phone_dl').show();
+	});
+
+
+});
+
+function delCookie(name) 
+{ 
+    var exp = new Date(); 
+    exp.setTime(exp.getTime() - 1); 
+    var cval=getCookie(name); 
+    if(cval!=null){
+        document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
+    } 
+}
+
+function getCookie(name) 
+{ 
+var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg)){
+        return unescape(arr[2]); 
+     } else {
+        return null; 
+     }
+ } 
+
+function GetQueryString(name)
+{
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r = window.location.search.substr(1).match(reg);
+
+     if(r!=null){
+     	 return  unescape(r[2]); 
+     }	
+     return null;
+}   
+
+
+function checkMobile(s) {
+    var regu = /^[1][345678][0-9]{9}$/;
+    var re = new RegExp(regu);
+    if (re.test(s)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+var wrongTimer = null;
+function errorShow(str){
+  	   $('.theSame_wrong span').html(str);
+       $('.theSame_wrong').fadeIn();
+       if(wrongTimer){
+    	clearTimeout(wrongTimer);
+       }
+       wrongTimer = setTimeout(function(){
+       	$('.theSame_wrong').fadeOut();
+       },5000);
+}
+</script>
+
+</body></html>
